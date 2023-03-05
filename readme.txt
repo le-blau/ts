@@ -1,0 +1,1 @@
+https://www.udemy.com/course/understanding-typescript-jp/　の練習用レポジトリ
