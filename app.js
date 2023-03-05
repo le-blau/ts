@@ -1,5 +1,3 @@
-// Union型
-// 関数に数値も文字も渡せるようにする
 function combine(input1, input2, resultConversion) {
     var result;
     if (typeof input1 === 'number' && typeof input2 === 'number' || resultConversion === 'as-number') {

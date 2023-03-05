@@ -1,7 +1,11 @@
+// エイリアス型
+type Combinable = number | string;
+type ComversionDescriptor = 'as-number' | 'as-text';
+
 function combine(
-  input1: number|string,
-  input2: number|string,
-  resultConversion: 'as-number' | 'as-text', // リテラル型
+  input1: Combinable,
+  input2: Combinable,
+  resultConversion: ComversionDescriptor,
 ) {
   let result;
   if (typeof input1 === 'number' && typeof input2 === 'number' || resultConversion === 'as-number') {
