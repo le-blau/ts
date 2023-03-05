@@ -1,43 +1,17 @@
-// const person: {
-//   name: string;
-//   age: number;
-//   hobbies: string[];
-//   role: [number, string];
-// } = {
-//   name: 'yota',
-//   age: 30,
-//   hobbies: ['Sports', 'Cooking'],  // array
-//   role: [2, 'author'],             // tuple
-// }
-
-enum Role {
-  ADMIN,
-  READ_ONLY,
-  AUTHOR
+// Union型
+// 関数に数値も文字も渡せるようにする
+function combine(input1: number|string, input2: number|string) {
+  let result;
+  if (typeof input1 === 'number' && typeof input2 === 'number') {
+    result = input1 + input2;
+  } else {
+    result = input1.toString() + input2.toString();
+  }
+  return result;
 }
 
-const person = {
-  name: 'yota',
-  age: 30,
-  hobbies: ['Sports', 'Cooking'],  // array
-  role: Role.ADMIN
-}
+const combineAges = combine(30, 26);
+console.log(combineAges)
 
-
-// person.role.push('admin'); こっちは許可される
-// person.role[1] = 10;
-
-// person.role = [0, 'admin'];
-
-let favoriteActivities: string[];
-favoriteActivities = ['sports'];
-
-console.log(person.name);
-
-for (const hobboy of person.hobbies) {
-  console.log(hobboy.toUpperCase());
-}
-
-if (person.role === Role.ADMIN) {
-  console.log('管理者ユーザー');
-}
+const combinedNames = combine('Max', 'Anna');
+console.log(combinedNames)
