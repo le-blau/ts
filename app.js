@@ -1,8 +1,10 @@
 var person = {
     name: 'yota',
     age: 30,
-    hobbies: ['Sports', 'Cooking']
+    hobbies: ['Sports', 'Cooking'],
+    role: [2, 'author']
 };
+person.role[1] = 10;
 var favoriteActivities;
 favoriteActivities = ['sports'];
 console.log(person.name);
