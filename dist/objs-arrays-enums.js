@@ -1,15 +1,4 @@
 "use strict";
-// const person: {
-//   name: string;
-//   age: number;
-//   hobbies: string[];
-//   role: [number, string];
-// } = {
-//   name: 'yota',
-//   age: 30,
-//   hobbies: ['Sports', 'Cooking'],  // array
-//   role: [2, 'author'],             // tuple
-// }
 var Role;
 (function (Role) {
     Role[Role["ADMIN"] = 0] = "ADMIN";
@@ -22,9 +11,6 @@ const person = {
     hobbies: ['Sports', 'Cooking'],
     role: Role.ADMIN
 };
-// person.role.push('admin'); こっちは許可される
-// person.role[1] = 10;
-// person.role = [0, 'admin'];
 let favoriteActivities;
 favoriteActivities = ['sports'];
 console.log(person.name);
