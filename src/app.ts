@@ -1,3 +1,20 @@
+// autobind decorator
+function autobind(
+  _: any,
+  _2: string,
+  descriptor: PropertyDescriptor,
+) {
+  const originalMethod = descriptor.value;
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    }
+  }
+  return adjDescriptor;
+}
+
 class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
@@ -24,15 +41,14 @@ class ProjectInput {
     this.attach();
   }
 
+  @autobind
   private submitHandler(event: Event) {
     event.preventDefault(); // このフォームからHTMLイベントが送られないように設定
     console.log(this.titleInputElement.value);
   }
 
   private configure() {
-    console.log(this)
-    this.element.addEventListener('submit', this.submitHandler.bind(this)); // 関数が実行されたとき、thisが参照するべきオブジェクトを渡す
-                                                                            // configureメソッドはコンストラクタで実行されるので、bindのthisはProjectInputクラスのオブジェクトを参照する。
+    this.element.addEventListener('submit', this.submitHandler);
   } 
 
   private attach() {
