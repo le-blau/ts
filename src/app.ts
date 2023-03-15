@@ -1,3 +1,44 @@
+// 状態管理クラス
+class ProjectState {
+  private listeners: any[] = [];
+  private projects: any[] = [];
+
+  private static instance: ProjectState;
+
+  private constructor() {
+
+  }
+
+  static getInstance() {
+    if (this.instance) {
+      return this.instance
+    } else {
+      this.instance = new ProjectState;
+      return this.instance
+    }
+  }
+
+  addListener(listenerFn: Function) {
+    this.listeners.push(listenerFn);
+  }
+
+  addProject(title: string, description: string, manday: number) {
+    const newProject = {
+      id: Math.random.toString(),
+      title: title,
+      description: description,
+      manday: manday,
+    }
+
+    this.projects.push(newProject);
+    for (const listenerFn of this.listeners) {
+      listenerFn(this.projects.slice())
+    }
+  }
+}
+
+const projectState = ProjectState.getInstance();
+
 // Validation
 interface Validatable {
   value: string | number;
@@ -52,17 +93,34 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
+  assignedProjects: any[];
 
   constructor(private type: 'active' | 'finished') {
     this.templateElement = document.getElementById('project-list')! as HTMLTemplateElement;
     this.hostElement = document.getElementById('app')! as HTMLDivElement;
+    this.assignedProjects = [];
 
     const importedNode = document.importNode(this.templateElement.content, true);
     this.element = importedNode.firstElementChild as HTMLElement;  // #project-list 直下のprojects要素
     this.element.id = `${this.type}-projects`;
 
+    projectState.addListener((projects: any[]) => {
+      this.assignedProjects = projects;
+      this.renderProjects();
+    })
+
     this.attach();
     this.renderContent();
+  }
+
+  private renderProjects() {
+    const listEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
+    for (const prjItem of this.assignedProjects) {
+      // リストの項目を作成
+      const listItem = document.createElement('li');
+      listItem.textContent = prjItem.title
+      listEl.appendChild(listItem);
+    }
   }
 
   // ul要素にid, h2にテキストを設定
@@ -148,10 +206,10 @@ class ProjectInput {
   @autobind
   private submitHandler(event: Event) {
     event.preventDefault(); // このフォームからHTMLイベントが送られないように設定
-    const userInput = this.gatherUserInput();
+    const userInput = this.gatherUserInput();  // 入力値を検証
     if (Array.isArray(userInput)) {
       const [title, desc, manday] = userInput;
-      console.log(title, desc, manday);
+      projectState.addProject(title, desc, manday)
       this.clearInputs();
     }
   }
