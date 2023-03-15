@@ -93,7 +93,7 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
-  assignedProjects: any[];
+  assignedProjects: any[]; // 新規追加プロジェクト
 
   constructor(private type: 'active' | 'finished') {
     this.templateElement = document.getElementById('project-list')! as HTMLTemplateElement;
@@ -104,7 +104,7 @@ class ProjectList {
     this.element = importedNode.firstElementChild as HTMLElement;  // #project-list 直下のprojects要素
     this.element.id = `${this.type}-projects`;
 
-    projectState.addListener((projects: any[]) => {
+    projectState.addListener((projects: any[]) => {  // ProjectInputによって追加されたprojectが、projectStateを経由しここに渡される
       this.assignedProjects = projects;
       this.renderProjects();
     })
@@ -114,7 +114,7 @@ class ProjectList {
   }
 
   private renderProjects() {
-    const listEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
+    const listEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement; // 現在表示中のprjectリスト
     for (const prjItem of this.assignedProjects) {
       // リストの項目を作成
       const listItem = document.createElement('li');
