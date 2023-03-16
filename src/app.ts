@@ -1,7 +1,24 @@
+// Project Type
+enum ProjectStatus {
+  Active,
+  Finished,
+}
+
+class Project {
+  constructor(
+    public id: string,
+    public title: string,
+    public description: string,
+    public manday: number,
+    public status: ProjectStatus
+  ) {}
+}
+
 // 状態管理クラス
+type Listener = (items: Project[]) => void; // 関数型のカスタム型を定義
 class ProjectState {
-  private listeners: any[] = [];
-  private projects: any[] = [];
+  private listeners: Listener[] = [];
+  private projects: Project[] = [];
 
   private static instance: ProjectState;
 
@@ -16,17 +33,18 @@ class ProjectState {
     }
   }
 
-  addListener(listenerFn: Function) {
+  addListener(listenerFn: Listener) {
     this.listeners.push(listenerFn);
   }
 
   addProject(title: string, description: string, manday: number) {
-    const newProject = {
-      id: Math.random.toString(),
-      title: title,
-      description: description,
-      manday: manday,
-    };
+    const newProject = new Project(
+      Math.random.toString(),
+      title,
+      description,
+      manday,
+      ProjectStatus.Active
+    );
 
     this.projects.push(newProject);
     for (const listenerFn of this.listeners) {
@@ -101,7 +119,7 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
-  assignedProjects: any[]; // 新規追加プロジェクト
+  assignedProjects: Project[]; // 新規追加プロジェクト
 
   constructor(private type: "active" | "finished") {
     this.templateElement = document.getElementById(
@@ -117,7 +135,7 @@ class ProjectList {
     this.element = importedNode.firstElementChild as HTMLElement; // #project-list 直下のprojects要素
     this.element.id = `${this.type}-projects`;
 
-    projectState.addListener((projects: any[]) => {
+    projectState.addListener((projects: Project[]) => {
       // ProjectInputによって追加されたprojectが、projectStateを経由しここに渡される
       this.assignedProjects = projects;
       this.renderProjects();
