@@ -136,8 +136,18 @@ class ProjectList {
     this.element.id = `${this.type}-projects`;
 
     projectState.addListener((projects: Project[]) => {
-      // ProjectInputによって追加されたprojectが、projectStateを経由しここに渡される
-      this.assignedProjects = projects;
+      // 絞り込み
+      // filterメソッドは関数を受け取る
+      // その関数は配列のすべての値に対して実行される
+      const relevantProjects = projects.filter(prj => {
+        if (this.type === 'active') {
+          return prj.status === ProjectStatus.Active;
+        }
+        return prj.status === ProjectStatus.Finished;
+      })
+
+      // 新規追加したプロジェクトがフィルタリングされ、プロジェクト状態ごとに格納される
+      this.assignedProjects = relevantProjects; // 「relevant: 関連する」
       this.renderProjects();
     });
 
@@ -149,6 +159,7 @@ class ProjectList {
     const listEl = document.getElementById(
       `${this.type}-projects-list`
     )! as HTMLUListElement; // 現在表示中のprjectリスト
+    listEl.innerHTML = ''; // リストをクリア
     for (const prjItem of this.assignedProjects) {
       // リストの項目を作成
       const listItem = document.createElement("li");
