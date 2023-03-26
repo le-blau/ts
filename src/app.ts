@@ -208,6 +208,7 @@ class ProjectItem
   }
 
   configure() {
+    // 画面上でユーザーアクション（イベント）が起きたとき、対応するメソッドが呼び出されるように設定
     this.element.addEventListener('dragstart', this.dragStartHandler);
     this.element.addEventListener('dragend', this.dragEndHandler);
   }
@@ -221,7 +222,7 @@ class ProjectItem
 }
 
 // プロジェクト一覧
-class ProjectList extends Component<HTMLDivElement, HTMLElement> {
+class ProjectList extends Component<HTMLDivElement, HTMLElement> implements DragTarget{
   assignedProjects: Project[]; // 新規追加プロジェクト
 
   constructor(private type: "active" | "finished") {
@@ -233,7 +234,30 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
     this.renderContent();
   }
 
+  // ドラッグ中にリスト内に入ったとき
+  @autobind
+  dragOverHandler(_: DragEvent) {
+    const listEl = this.element.querySelector('ul')!;
+    listEl.classList.add('droppable');
+  }
+  
+  dropHandler(_: DragEvent) {
+    
+  }
+
+  // ドラッグ中にリスト要素から離れたとき
+  @autobind
+  dragLeaveHandler(_: DragEvent) {
+    const listEl = this.element.querySelector('ul')!;
+    listEl.classList.remove('droppable');
+  }
+
   configure() {
+    // 画面上でユーザーアクション（イベント）が起きたとき、対応するメソッドが呼び出されるように設定
+    this.element.addEventListener('dragover', this.dragOverHandler);
+    this.element.addEventListener('drop', this.dropHandler);
+    this.element.addEventListener('dragleave', this.dragLeaveHandler);
+
     projectState.addListener((projects: Project[]) => {
       // 絞り込み
       // filterメソッドは関数を受け取る
