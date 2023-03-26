@@ -199,11 +199,12 @@ class ProjectItem
   }
 
   @autobind
-  dragStartHandler(event: DragEvent): void {
-    console.log(event)  ;
+  dragStartHandler(event: DragEvent) {
+    event.dataTransfer!.setData('text/plain', this.project.id);
+    event.dataTransfer!.effectAllowed = 'move';
   }
 
-  dragEndHandler(_: DragEvent): void {
+  dragEndHandler(_: DragEvent) {
     console.log('Drag終了');
   }
 
@@ -236,12 +237,16 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> implements Drag
 
   // ドラッグ中にリスト内に入ったとき
   @autobind
-  dragOverHandler(_: DragEvent) {
-    const listEl = this.element.querySelector('ul')!;
-    listEl.classList.add('droppable');
+  dragOverHandler(event: DragEvent) {
+    if (event.dataTransfer && event.dataTransfer.types[0] === 'text/plain') {
+      event.preventDefault(); // ドロップを許可（jsのデフォではドロップ禁止されているため）
+      const listEl = this.element.querySelector('ul')!;
+      listEl.classList.add('droppable');
+    }
   }
   
-  dropHandler(_: DragEvent) {
+  dropHandler(event: DragEvent) {
+    console.log(event.dataTransfer!.getData('text/plain'));
     
   }
 
