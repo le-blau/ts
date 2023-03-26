@@ -42,7 +42,7 @@ class ProjectState extends State {
         }
     }
     addProject(title, description, manday) {
-        const newProject = new Project(Math.random.toString(), title, description, manday, ProjectStatus.Active);
+        const newProject = new Project(Math.random().toString(), title, description, manday, ProjectStatus.Active);
         this.projects.push(newProject);
         this.updateListeners();
     }
