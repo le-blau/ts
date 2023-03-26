@@ -160,6 +160,29 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
   }
 }
 
+// プロジェクトアイテム
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+  private project: Project;
+
+  constructor(hostId: string, project: Project) {
+    super("single-project", hostId, false, project.id);
+    this.project = project;
+
+    this.configure();
+    this.renderContent();
+  }
+
+  configure() {}
+
+  renderContent() {
+    // 指定タグへテキストを設定
+    this.element.querySelector("h2")!.textContent = this.project.title; // this.elementは"single-project"のli要素
+    this.element.querySelector("h3")!.textContent =
+      this.project.manday.toString();
+    this.element.querySelector("p")!.textContent = this.project.description;
+  }
+}
+
 // プロジェクト一覧
 class ProjectList extends Component<HTMLDivElement, HTMLElement> {
   assignedProjects: Project[]; // 新規追加プロジェクト
@@ -205,10 +228,7 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
     )! as HTMLUListElement; // 現在表示中のprjectリスト
     listEl.innerHTML = ""; // リストをクリア
     for (const prjItem of this.assignedProjects) {
-      // リストの項目を作成
-      const listItem = document.createElement("li");
-      listItem.textContent = prjItem.title;
-      listEl.appendChild(listItem);
+      new ProjectItem(listEl.id, prjItem);
     }
   }
 }
