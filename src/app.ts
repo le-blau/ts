@@ -148,7 +148,7 @@ function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
   return adjDescriptor;
 }
 
-// Componet Class
+// Component Class
 abstract class Component<T extends HTMLElement, U extends HTMLElement> {
   templateElement: HTMLTemplateElement; // どのエレメントを読み込むか
   hostElement: T; // どの配下にコンポーネントを作るか
