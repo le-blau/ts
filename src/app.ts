@@ -1,3 +1,18 @@
+// ドラッグ & ドロップ
+
+// ドラッグしたもの
+interface Draggable {
+  dragStartHandler(event: DragEvent): void; // DragEventはTSに組み込まれている
+  dragEndHandler(event: DragEvent): void;
+}
+
+// ドラッグ先
+interface DragTarget {
+  dragOverHandler(event: DragEvent): void; // ドロップしようとした場所がドロップできるかを処理
+  dropHandler(event: DragEvent): void;
+  dragLeaveHandler(event: DragEvent): void;
+}
+
 // Project Type
 enum ProjectStatus {
   Active,
@@ -161,7 +176,10 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
 }
 
 // プロジェクトアイテム
-class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+class ProjectItem
+  extends Component<HTMLUListElement, HTMLLIElement>
+  implements Draggable
+{
   private project: Project;
 
   get manday() {
@@ -180,7 +198,19 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
     this.renderContent();
   }
 
-  configure() {}
+  @autobind
+  dragStartHandler(event: DragEvent): void {
+    console.log(event)  ;
+  }
+
+  dragEndHandler(_: DragEvent): void {
+    console.log('Drag終了');
+  }
+
+  configure() {
+    this.element.addEventListener('dragstart', this.dragStartHandler);
+    this.element.addEventListener('dragend', this.dragEndHandler);
+  }
 
   renderContent() {
     // 指定タグへテキストを設定
