@@ -11,7 +11,7 @@ import { ProjectStatus } from "../models/project.js";
 import { ProjectItem } from "./project-item.js";
 export class ProjectList extends Component {
     constructor(type) {
-        super("project-list", "app", false, `${type}-projects`);
+        super("project-list", "projects-wrap", false, `${type}-projects`);
         this.type = type;
         this.assignedProjects = [];
         this.configure();
@@ -51,7 +51,7 @@ export class ProjectList extends Component {
         const listId = `${this.type}-projects-list`;
         this.element.querySelector("ul").id = listId;
         this.element.querySelector("h2").textContent =
-            this.type === "active" ? "実行中プロジェクト" : "完了プロジェクト";
+            this.type === "active" ? "実行中" : "完了";
     }
     renderProjects() {
         const listEl = document.getElementById(`${this.type}-projects-list`);

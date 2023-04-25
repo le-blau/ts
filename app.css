@@ -28,6 +28,7 @@ textarea {
   width: 100%;
   max-width: 30rem;
   border: 1px solid #ccc;
+  border-radius: 0.3rem;
 }
 
 input:focus,
@@ -38,11 +39,12 @@ textarea:focus {
 
 button {
   font: inherit;
-  background: #ff0062;
-  border: 1px solid #ff0062;
+  background: #094067;
+  border: 1px solid #094067;
   cursor: pointer;
   color: white;
   padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
 }
 
 button:focus {
@@ -51,17 +53,26 @@ button:focus {
 
 button:hover,
 button:active {
-  background: #a80041;
-  border-color: #a80041;
+  opacity: 0.7;
+}
+
+#projects-wrap {
+  display: flex;
+  align-items: flex-start;
 }
 
 .projects {
+  flex: 1;
+  border-radius: 0.5rem;
   margin: 1rem;
-  border: 1px solid #ff0062;
+  border: 1px solid #ff8ab1;
+  max-width: 50%;
+
 }
 
 .projects header {
-  background: #ff0062;
+  background: #ff8ab1;
+  border-radius: 0.3rem 0.3rem 0 0;
   height: 3.5rem;
   display: flex;
   justify-content: center;
@@ -69,11 +80,11 @@ button:active {
 }
 
 #finished-projects {
-  border-color: #0044ff;
+  border-color: #3da9fc;
 }
 
 #finished-projects header {
-  background: #0044ff;
+  background: #3da9fc;
 }
 
 .projects h2 {
@@ -92,15 +103,17 @@ button:active {
   padding: 1rem;
   margin: 1rem;
   background-color: white;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .projects li h2 {
-  color: #ff0062;
+  color: #575757;
   margin: 0.5rem 0;
 }
 
 #finished-projects li h2 {
-  color: #0044ff;
+  color: #575757;
 }
 
 .projects li h3 {
@@ -123,6 +136,6 @@ button:active {
 #user-input {
   margin: 1rem;
   padding: 1rem;
-  border: 1px solid #ff0062;
-  background: #f7f7f7;
+  background: #eee;
+  border-radius: 0.5rem;
 }

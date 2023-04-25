@@ -13,7 +13,7 @@ export class ProjectList
   assignedProjects: Project[]; // 新規追加プロジェクト
 
   constructor(private type: "active" | "finished") {
-    super("project-list", "app", false, `${type}-projects`);
+    super("project-list", "projects-wrap", false, `${type}-projects`);
 
     this.assignedProjects = [];
 
@@ -75,7 +75,7 @@ export class ProjectList
     const listId = `${this.type}-projects-list`;
     this.element.querySelector("ul")!.id = listId;
     this.element.querySelector("h2")!.textContent =
-      this.type === "active" ? "実行中プロジェクト" : "完了プロジェクト";
+      this.type === "active" ? "実行中" : "完了";
   }
 
   private renderProjects() {
