@@ -8,12 +8,7 @@ import { Component } from '../components/base-component.js';
 import { autobind } from '../decorators/autobind.js';
 export class ProjectItem extends Component {
     get manday() {
-        if (this.project.manday < 20) {
-            return this.project.manday.toString() + "人日";
-        }
-        else {
-            return (this.project.manday / 20).toString() + "人月";
-        }
+        return this.project.manday.toString() + "日";
     }
     constructor(hostId, project) {
         super("single-project", hostId, false, project.id);
