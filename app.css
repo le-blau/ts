@@ -95,12 +95,12 @@ button:active {
 }
 
 .projects li h2 {
-  color: #ff0062;
+  color: #000000;
   margin: 0.5rem 0;
 }
 
 #finished-projects li h2 {
-  color: #0044ff;
+  color: #000000;
 }
 
 .projects li h3 {
