@@ -13,9 +13,9 @@ import { Draggable } from '../models/drag-drop.js';
 
     get manday() {
       if (this.project.manday < 20) {
-        return this.project.manday.toString() + "人日";
+        return this.project.manday.toString() + "日";
       } else {
-        return (this.project.manday / 20).toString() + "人月";
+        return (this.project.manday / 20).toString() + "月";
       }
     }
 
